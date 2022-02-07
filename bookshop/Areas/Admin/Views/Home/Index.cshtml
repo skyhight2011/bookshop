@@ -1,0 +1,78 @@
+﻿@using bookshop.Models
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+    List<Sach> listData = (List<Sach>)ViewData["listData"];
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Sách của bạn</h1>
+    <div class="row">
+        <div id="grid"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var data = @Html.Raw(Json.Encode(listData));
+
+        dataSource = new kendo.data.DataSource({
+            data: data,
+            transport: {
+                Read: "Admin/Home/Index",
+                Update: {
+                    url: "Admin/Home/Update",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    type: "post"
+                },
+                Delete: {
+                    url: "Admin/Home/Delete",
+                    dataType: "json",
+                    type: "DELETE"
+                }
+            },
+            batch: true,
+            editable: true,
+            pageSize: 3,
+            serverPaging: true,
+            schema: {
+                data: "data",
+                total: "Count",
+                model: {
+                    id: "MaSach",
+                    fields: {
+                        TenSach: { editable: true, validation: { required: true } },
+                        GiaBan: { editable: true, type: "number", validation: { required: true, min: 0 } },
+                        MaxNXB: { editable: true, validation: { required: true } },
+                        MaChuDe: { editable: true, validation: { required: true } },
+                        SoLuongTon: { editable: true, validation: { required: true } },
+                    },
+                }
+            }
+        });
+
+        $("#grid").kendoGrid({
+            columns: [
+                { field: "TenSach", title: "Ten Sach" },
+                { field: "GiaBan", title: "Gia Ban" },
+                { field: "MaNXB", title: "Ma Nha Xuat Ban" },
+                { field: "MaChuDe", title: "Ma Chu De" },
+                { field: "SoLuongTon", title: "So Luong Ton" },
+                { command: ["destroy"] },
+            ],
+            dataSource: data,
+            editable: ["true", "inline"],
+            saveChanges: function (e) {
+                        $.ajax({
+                            url: "/Admin/Home/Index",
+                            contentType: "json",
+                            success: function (status) {
+                                console.log("data oke");
+                            }
+                        });
+            },
+            toolbar: ["save"],
+        });
+        var grid = $("#grid").data("kendoGrid");
+
+    });
+</script>

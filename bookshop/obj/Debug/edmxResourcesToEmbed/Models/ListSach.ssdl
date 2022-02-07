@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QuanLyBanSachModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Sach">
+    <Key>
+      <PropertyRef Name="MaSach" />
+    </Key>
+    <Property Name="MaSach" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenSach" Type="nvarchar" MaxLength="50" />
+    <Property Name="GiaBan" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="MoTa" Type="nvarchar(max)" />
+    <Property Name="AnhBia" Type="nvarchar" MaxLength="50" />
+    <Property Name="SoLuongTon" Type="int" />
+    <Property Name="MaNXB" Type="int" />
+    <Property Name="MaChuDe" Type="int" />
+  </EntityType>
+  <EntityContainer Name="QuanLyBanSachModel1StoreContainer">
+    <EntitySet Name="Sach" EntityType="Self.Sach" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>
